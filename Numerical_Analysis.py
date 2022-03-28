@@ -1,26 +1,39 @@
-def initMatrix():
-    rows = int(input('Enter the number of rows: '))
-    cols = int(input('Enter the number of columns: '))
-    mat = []
-    print('Enter variables: ')
-    for r in range(rows):
-        row = []
-        for c in range(cols):
-            row.append(float(input()))
-        mat.append(row)
-    return mat
-
-def initB(n):
-    b = []
-    for r in range(n):
-        b.append(float(input()))
-
-
-
 def printMatrix(matrix):
     for line in matrix:
         print('  '.join(map(str, line)))
     print("\n")
+
+def print_mul_format(lmat, rmat, sol):
+    assert len(lmat) == len(rmat) and len(lmat) == len(sol), 'Error'
+    l = []
+    r = []
+    s = []
+    for row in range(len(lmat)):
+        rl = []
+        rr = []
+        sr = []
+        for col in range(len(lmat)):
+            rl.append(float(round(lmat[row][col], 2)))
+            rr.append(float(round(rmat[row][col], 2)))
+            sr.append(float(round(sol[row][col], 2)))
+        l.append(rl)
+        r.append(rr)
+        s.append(sr)
+    for line in range(len(lmat)):
+        if line == len(lmat)//2:
+            print(f'{l[line]} * {r[line]} = {s[line]}')
+        else:
+            print(f'{l[line]}   {r[line]}   {s[line]}')
+
+
+def copy_matrix(mat):
+    new_mat = []
+    for r in range(len(mat)):
+        row = []
+        for c in range(len(mat)):
+            row.append(mat[r][c])
+        new_mat.append(row)
+    return new_mat
 
 
 def Identity(n):
@@ -73,108 +86,77 @@ def FinalVector(matrix, b):
                 pivot = matrix[i][j]
                 for k in range(i + 1, n):
                     if abs(matrix[k][j]) > abs(pivot):  # pivoting
-                        print("~~~Old Matrix~~~")
-                        printMatrix(matrix)
-                        print("~~~Elementary Matrix~~~")
+                        originalmatrix = copy_matrix(matrix)
                         elementary_matrix = ExchangeRows(k, i, n)
-                        printMatrix(elementary_matrix)
                         matrix = Matrix_multiplication(elementary_matrix, matrix)
                         pivot = matrix[i][j]
-                        print("~~~Updated Matrix~~~")
-                        printMatrix(matrix)
                         b = Matrix_multiplication(elementary_matrix, b)
+                        print_mul_format(elementary_matrix, originalmatrix, matrix)
+                        print('\n\n')
 
 
         for i in range(0, n):
             if i > j:
                 if matrix[i][j] != 0:
-                    print("~~~Old Matrix~~~")
-                    printMatrix(matrix)
-                    print("~~~Elementary Matrix~~~")
+                    originalmatrix=copy_matrix(matrix)
                     elementary_matrix = ResetMember(i, j, n, pivot, matrix[i][j])
-                    printMatrix(elementary_matrix)
                     matrix = Matrix_multiplication(elementary_matrix, matrix)
-                    print("~~~Updated Matrix~~~")
-                    printMatrix(matrix)
                     b = Matrix_multiplication(elementary_matrix, b)
+                    print_mul_format(elementary_matrix, originalmatrix, matrix)
+                    print('\n\n')
 
 
         for i in range(0, n):
             if i < j:
                 if matrix[i][j] != 0:
-                    print("~~~Old Matrix~~~")
-                    printMatrix(matrix)
-                    print("~~~Elementary Matrix~~~")
+                    originalmatrix = copy_matrix(matrix)
                     elementary_matrix = ResetMember(i, j, n, pivot, matrix[i][j])
-                    printMatrix(elementary_matrix)
                     matrix = Matrix_multiplication(elementary_matrix, matrix)
-                    print("~~~Updated Matrix~~~")
-                    printMatrix(matrix)
                     b = Matrix_multiplication(elementary_matrix, b)
+                    print_mul_format(elementary_matrix, originalmatrix, matrix)
+                    print('\n\n')
 
     for i in range(0, n):
         if matrix[i][i] != 1:
             if matrix[i][i] < 0:
-                print("~~~Old Matrix~~~")
-                printMatrix(matrix)
-                print("~~~Elementary Matrix~~~")
+                originalmatrix = copy_matrix(matrix)
                 elementary_matrix = MultiplyRow(i, -1, n)
-                printMatrix(elementary_matrix)
                 matrix = Matrix_multiplication(elementary_matrix, matrix)
-                print("~~~Updated Matrix~~~")
-                printMatrix(matrix)
                 b = Matrix_multiplication(elementary_matrix, b)
+                print_mul_format(elementary_matrix, originalmatrix, matrix)
+                print('\n\n')
 
-            print("~~~Old Matrix~~~")
-            printMatrix(matrix)
-            print("~~~Elementary Matrix~~~")
+            originalmatrix = copy_matrix(matrix)
             elementary_matrix = MultiplyRow(i, 1 / matrix[i][i], n)
-            printMatrix(elementary_matrix)
             matrix = Matrix_multiplication(elementary_matrix, matrix)
-            print("~~~Updated Matrix~~~")
-            printMatrix(matrix)
-            print("~~~Result Vector~~~")
             b=Matrix_multiplication(elementary_matrix, b)
-            printMatrix(b)
+            print_mul_format(elementary_matrix, originalmatrix, matrix)
+            print('\n')
     return b
 
+
 #Main
-mat1 = [[-1.41, 2, 0],
-        [0, 2, -1.41],
-        [1, -1.41, 1]]
+R = int(input("Enter the number of rows:"))
+C = int(input("Enter the number of columns:"))
 
-mat2 = [[1, 17, 12,-1/3],
-        [92/11, 15, 17.12,9],
-        [103/2, 84.62, 0,-11],
-        [0, 2, 7,0.2]]
 
-b1 = [[1], [1], [1]]
-b2 = [[1], [2], [3], [4]]
-#FinalVector(mat1, b1)
-# FinalVector(mat2, b2)
+#matrix
+matrix = []
+print("Enter all the matrix:")
+for i in range(R):
+    a = []
+    for j in range(C):
+        a.append(float(input()))
+    matrix.append(a)
 
-def print_mul_format(lmat, rmat, sol):
-    assert len(lmat) == len(rmat) and len(lmat) == len(sol), 'Error'
-    l = []
-    r = []
-    s = []
-    for row in range(len(lmat)):
-        rl = []
-        rr = []
-        sr = []
-        for col in range(len(lmat)):
-            rl.append(float(round(lmat[row][col], 2)))  # for nice print
-            rr.append(float(round(rmat[row][col], 2)))  # for nice print
-            sr.append(float(round(sol[row][col], 2)))  # for nice print
-        l.append(rl)
-        r.append(rr)
-        s.append(sr)
-    for line in range(len(lmat)):
-        if line == len(lmat)//2:
-            print(f'{l[line]} \t*\t {r[line]} \t=\t {s[line]}')
-        else:
-            print(f'{l[line]}  \t\t {r[line]} \t\t  {s[line]}')
 
-print_mul_format(mat1,mat1,mat1)
-print('\n\n')
-print_mul_format(mat2,mat2,mat2)
+#vector b
+b = [[1.5], [-7], [2]]
+b=FinalVector(matrix, b)
+
+
+#answer
+ans=[]
+for i in range(R):
+    ans.append(float(round(b[i][0],2)))
+print(f'b: {ans}')
