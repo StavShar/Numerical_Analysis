@@ -151,8 +151,15 @@ for i in range(R):
 
 
 #vector b
-b = [[], [], []]
-b=FinalVector(matrix, b)
+b = []
+print('Enter vector b: ')
+for i in range(R):
+    br = []
+    for j in range(1):
+        br.append(float(input()))
+    b.append(br)
+
+b = FinalVector(matrix, b)
 
 
 #answer
