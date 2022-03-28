@@ -6,9 +6,16 @@ def initMatrix():
     for r in range(rows):
         row = []
         for c in range(cols):
-            row.append(int(input()))
+            row.append(float(input()))
         mat.append(row)
     return mat
+
+def initB(n):
+    b = []
+    for r in range(n):
+        b.append(float(input()))
+
+
 
 def printMatrix(matrix):
     for line in matrix:
@@ -134,14 +141,14 @@ def FinalVector(matrix, b):
 #Main
 mat1 = [[-1.41, 2, 0],
         [0, 2, -1.41],
-        [1, -1.41, 0]]
+        [1, -1.41, 1]]
 
 mat2 = [[1, 17, 12,-1/3],
         [92/11, 15, 17.12,9],
         [103/2, 84.62, 0,-11],
         [0, 2, 7,0.2]]
 
-b1 = [[1], [2], [3]]
+b1 = [[1], [1], [1]]
 b2 = [[1], [2], [3], [4]]
 #FinalVector(mat1, b1)
 # FinalVector(mat2, b2)
@@ -156,18 +163,18 @@ def print_mul_format(lmat, rmat, sol):
         rr = []
         sr = []
         for col in range(len(lmat)):
-            rl.append(float(round(lmat[row][col], 2)))
-            rr.append(float(round(rmat[row][col], 2)))
-            sr.append(float(round(sol[row][col], 2)))
+            rl.append(float(round(lmat[row][col], 2)))  # for nice print
+            rr.append(float(round(rmat[row][col], 2)))  # for nice print
+            sr.append(float(round(sol[row][col], 2)))  # for nice print
         l.append(rl)
         r.append(rr)
         s.append(sr)
     for line in range(len(lmat)):
         if line == len(lmat)//2:
-            print(f'{l[line]} * {r[line]} = {s[line]}')
+            print(f'{l[line]} \t*\t {r[line]} \t=\t {s[line]}')
         else:
-            print(f'{l[line]}   {r[line]}   {s[line]}')
+            print(f'{l[line]}  \t\t {r[line]} \t\t  {s[line]}')
 
-print_mul_format(mat1, mat1, mat1)
+print_mul_format(mat1,mat1,mat1)
 print('\n\n')
-print_mul_format(mat2, mat2, mat2)
+print_mul_format(mat2,mat2,mat2)
