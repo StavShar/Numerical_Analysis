@@ -166,4 +166,4 @@ b = FinalVector(matrix, b)
 ans=[]
 for i in range(R):
     ans.append(float(round(b[i][0],2)))
-print(f'b: {ans}')
+print(f'x: {ans}')
