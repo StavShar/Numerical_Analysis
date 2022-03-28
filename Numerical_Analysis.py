@@ -151,7 +151,7 @@ for i in range(R):
 
 
 #vector b
-b = [[1.5], [-7], [2]]
+b = [[], [], []]
 b=FinalVector(matrix, b)
 
 
