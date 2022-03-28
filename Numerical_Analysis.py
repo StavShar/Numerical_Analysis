@@ -1,3 +1,15 @@
+def initMatrix():
+    rows = int(input('Enter the number of rows: '))
+    cols = int(input('Enter the number of columns: '))
+    mat = []
+    print('Enter variables: ')
+    for r in range(rows):
+        row = []
+        for c in range(cols):
+            row.append(int(input()))
+        mat.append(row)
+    return mat
+
 def printMatrix(matrix):
     for line in matrix:
         print('  '.join(map(str, line)))
@@ -131,5 +143,31 @@ mat2 = [[1, 17, 12,-1/3],
 
 b1 = [[1], [2], [3]]
 b2 = [[1], [2], [3], [4]]
-FinalVector(mat1, b1)
+#FinalVector(mat1, b1)
 # FinalVector(mat2, b2)
+
+def print_mul_format(lmat, rmat, sol):
+    assert len(lmat) == len(rmat) and len(lmat) == len(sol), 'Error'
+    l = []
+    r = []
+    s = []
+    for row in range(len(lmat)):
+        rl = []
+        rr = []
+        sr = []
+        for col in range(len(lmat)):
+            rl.append(float(round(lmat[row][col], 2)))
+            rr.append(float(round(rmat[row][col], 2)))
+            sr.append(float(round(sol[row][col], 2)))
+        l.append(rl)
+        r.append(rr)
+        s.append(sr)
+    for line in range(len(lmat)):
+        if line == len(lmat)//2:
+            print(f'{l[line]} * {r[line]} = {s[line]}')
+        else:
+            print(f'{l[line]}   {r[line]}   {s[line]}')
+
+print_mul_format(mat1, mat1, mat1)
+print('\n\n')
+print_mul_format(mat2, mat2, mat2)
