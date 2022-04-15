@@ -135,7 +135,61 @@ def FinalVector(matrix, b):
     return b
 
 
+def getInverseMatrix(matrix):
+    n = len(matrix)
+    inverseMatrix = Identity(n)
+
+    for j in range(0, n):
+        for i in range(0, n):
+            if i == j:
+                pivot = matrix[i][j]
+                for k in range(i + 1, n):
+                    if abs(matrix[k][j]) > abs(pivot):  # pivoting
+                        originalmatrix = copy_matrix(matrix)
+                        elementary_matrix = ExchangeRows(k, i, n)
+                        matrix = Matrix_multiplication(elementary_matrix, matrix)
+                        pivot = matrix[i][j]
+                        inverseMatrix = Matrix_multiplication(elementary_matrix, inverseMatrix)
+
+        for i in range(0, n):
+            if i > j:
+                if matrix[i][j] != 0:
+                    originalmatrix = copy_matrix(matrix)
+                    elementary_matrix = ResetMember(i, j, n, pivot, matrix[i][j])
+                    matrix = Matrix_multiplication(elementary_matrix, matrix)
+                    inverseMatrix = Matrix_multiplication(elementary_matrix, inverseMatrix)
+
+        for i in range(0, n):
+            if i < j:
+                if matrix[i][j] != 0:
+                    originalmatrix = copy_matrix(matrix)
+                    elementary_matrix = ResetMember(i, j, n, pivot, matrix[i][j])
+                    matrix = Matrix_multiplication(elementary_matrix, matrix)
+                    inverseMatrix = Matrix_multiplication(elementary_matrix, inverseMatrix)
+
+    for i in range(0, n):
+        if matrix[i][i] != 1:
+            if matrix[i][i] < 0:
+                originalmatrix = copy_matrix(matrix)
+                elementary_matrix = MultiplyRow(i, -1, n)
+                matrix = Matrix_multiplication(elementary_matrix, matrix)
+                inverseMatrix = Matrix_multiplication(elementary_matrix, inverseMatrix)
+
+
+            originalmatrix = copy_matrix(matrix)
+            elementary_matrix = MultiplyRow(i, 1 / matrix[i][i], n)
+            matrix = Matrix_multiplication(elementary_matrix, matrix)
+            inverseMatrix = Matrix_multiplication(elementary_matrix, inverseMatrix)
+
+    for r in range(n):
+        for c in range(n):
+            inverseMatrix[r][c] = (float(round(inverseMatrix[r][c], 2)))
+    return inverseMatrix
+
+
+
 #Main
+'''
 R = int(input("Enter the number of rows:"))
 C = int(input("Enter the number of columns:"))
 
@@ -167,3 +221,4 @@ ans=[]
 for i in range(R):
     ans.append(float(round(b[i][0],2)))
 print(f'x: {ans}')
+'''

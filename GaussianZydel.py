@@ -1,4 +1,4 @@
-
+import Gaussian_Elimination
 
 def ZeroMatrix(n):
     mat = [([0] * n) for i in range(n)]  # initialize the matrix with zeros
@@ -35,12 +35,58 @@ def strongL(matrix):
                 mat[r][c] = matrix[r][c]
     return mat
 
-matrix = [[1,2,3],[4,5,6],[7,8,9]]
 
-printMatrix(matrix)
-print("U: ")
-printMatrix(strongU(matrix))
-print("D: ")
-printMatrix(strongD(matrix))
-print("L: ")
-printMatrix(strongL(matrix))
+
+def sumMatrix(mat1, mat2):
+    assert(len(mat1) == len(mat2)),"matrix not at the same size"
+    n = len(mat1)
+    mat = Gaussian_Elimination.Identity(n)
+    for r in range(n):
+        for c in range(n):
+            mat[r][c] = mat1[r][c] + mat2[r][c]
+    return mat
+
+def isDomDiagonal(mat):
+    n = len(mat)
+    for r in range(n):
+        sumline = 0
+        pivot = abs(mat[r][r])
+        for c in range(n):
+            if c != r:
+                sumline += abs(mat[r][c])
+        if sumline >= pivot:
+            return False
+    return True
+
+def negativeMatrix(mat):
+    n = len(mat)
+    for r in range(n):
+        for c in range(n):
+            mat[r][c] = -mat[r][c]
+    return mat
+
+def getG(matrix):
+    return Gaussian_Elimination.Matrix_multiplication(negativeMatrix(Gaussian_Elimination.getInverseMatrix(sumMatrix(strongL(matrix), strongD(matrix)))), strongU(matrix))
+
+def getH(matrix):
+    return Gaussian_Elimination.getInverseMatrix(sumMatrix(strongL(matrix), strongD(matrix)))
+
+#   #   #   #   #   #   #   #   #   #   #   #   #   #
+
+#matrix = [[1,2,3],[0,1,4],[5,6,0]]
+matrix = [[9,2,4],[3,9,1],[1,2,9]]
+
+
+print("H: ")
+matrixH = getH(matrix)
+printMatrix(matrixH)
+
+print("G: ")
+matrixG = getG(matrix)
+printMatrix(matrixG)
+
+if isDomDiagonal(matrix):
+    print("Inverse: ")
+    printMatrix(Gaussian_Elimination.getInverseMatrix(matrix))
+else:
+    print("diagonal not dominant")
