@@ -124,6 +124,8 @@ else:
 matrix = [[9,2,4],[3,9,1],[1,2,9]]
 
 
+
+
 print("H: ")
 matrixH = getH(matrix)
 printMatrix(matrixH)
