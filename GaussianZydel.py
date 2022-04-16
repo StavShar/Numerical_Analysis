@@ -36,7 +36,6 @@ def strongL(matrix):
     return mat
 
 
-
 def sumMatrix(mat1, mat2):
     assert(len(mat1) == len(mat2)),"matrix not at the same size"
     n = len(mat1)
@@ -71,8 +70,6 @@ def getG(matrix):
 def getH(matrix):
     return Gaussian_Elimination.getInverseMatrix(sumMatrix(strongL(matrix), strongD(matrix)))
 
-#   #   #   #   #   #   #   #   #   #   #   #   #   #
-
 def DominantDiagonalFix(matrix):
     n = len(matrix)
     dom = [0] * n
@@ -90,11 +87,10 @@ def DominantDiagonalFix(matrix):
         domDiagonalMatrix[dom[r]] = matrix[r]
     return domDiagonalMatrix
 
-
+#   #   #   #   #   #   #   #   #   #   #   #   #   #
 
 #matrix = [[1,2,3],[0,1,4],[5,6,0]]
 matrix = [[4,1,9],[9,2,4],[3,9,1]]
-
 
 print("H: ")
 matrixH = getH(matrix)
@@ -117,25 +113,3 @@ else:
     else:
         print("diagonal not dominant")
 
-
-# # # # # # # # # # # # # # #
-
-#matrix = [[1,2,3],[0,1,4],[5,6,0]]
-matrix = [[9,2,4],[3,9,1],[1,2,9]]
-
-
-
-
-print("H: ")
-matrixH = getH(matrix)
-printMatrix(matrixH)
-
-print("G: ")
-matrixG = getG(matrix)
-printMatrix(matrixG)
-
-if isDomDiagonal(matrix):
-    print("Inverse: ")
-    printMatrix(Gaussian_Elimination.getInverseMatrix(matrix))
-else:
-    print("diagonal not dominant")
