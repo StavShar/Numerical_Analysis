@@ -117,6 +117,9 @@ else:
     else:
         print("diagonal not dominant")
 
+
+# # # # # # # # # # # # # # #
+
 #matrix = [[1,2,3],[0,1,4],[5,6,0]]
 matrix = [[9,2,4],[3,9,1],[1,2,9]]
 
